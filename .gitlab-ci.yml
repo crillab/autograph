@@ -1,0 +1,17 @@
+before_script:
+  - export http_proxy=$HTTP_PROXY
+  - export https_proxy=$HTTP_PROXY
+
+test:
+    script:
+        - make test
+    tags:
+        - pytest
+    stage: test
+sonar:
+    script:
+        - make sonar
+    tags:
+        - pylint
+        - sonar
+    stage: test
