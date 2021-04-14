@@ -10,8 +10,6 @@ class MPL(Plot):
     def __init__(self):
         super().__init__()
         self._figure, self._ax = plt.subplots()
-        self.title_style = TextStyle()
-        self.title_position = TextPosition()
 
     def __change_title(self):
         if self.title is None:
@@ -25,20 +23,53 @@ class MPL(Plot):
 
     @Plot.title.setter
     def title(self, value):
-        super().title = value
+        Plot.title.fset(self, value)
         self.__change_title()
 
     @Plot.title_position.setter
     def title_position(self, value):
-        super().title_position = value
+        Plot.title_position.fset(self, value)
+        self.__change_title()
+
+    @Plot.title_style.setter
+    def title_style(self, value):
+        Plot.title_style.fset(self, value)
         self.__change_title()
 
     @Plot.x_label.setter
     def x_label(self, value):
-        super().x_label = value
+        Plot.x_label.fset(self, value)
         self._ax.set_xlabel(value)
 
     @Plot.y_label.setter
     def y_label(self, value):
-        super().y_label = value
+        Plot.y_label.fset(self, value)
         self._ax.set_ylabel(value)
+
+    @Plot.log_x.setter
+    def log_x(self, value):
+        Plot.log_x.fset(self, value)
+        self._ax.set_xscale('log' if self.log_x else 'linear')
+
+    @Plot.log_y.setter
+    def log_y(self, value):
+        Plot.log_y.fset(self, value)
+        self._ax.set_yscale('log' if self.log_y else 'linear')
+
+    def set_x_lim(self, left=None, right=None):
+        super().set_x_lim(left, right)
+        left = left if left is not None else self._ax.get_xlim()[0]
+        right = right if right is not None else self._ax.get_xlim()[1]
+        self._ax.set_xlim([left, right])
+
+    def set_y_lim(self, bottom=None, up=None):
+        super().set_y_lim(bottom, up)
+        bottom = bottom if bottom is not None else self._ax.get_ylim()[0]
+        up = up if up is not None else self._ax.get_ylim()[1]
+        self._ax.set_ylim([bottom, up])
+
+    def show(self):
+        return self._ax
+
+    def save(self, output):
+        pass
