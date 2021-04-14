@@ -14,7 +14,7 @@ class Plot:
 
     @property
     def title(self):
-        return self._data['title']['text']
+        return self._data.get('title', {}).get('text')
 
     @title.setter
     def title(self, value):
@@ -22,7 +22,7 @@ class Plot:
 
     @property
     def title_style(self) -> TextStyle:
-        return self._data.get('title').get('style')
+        return self._data.get('title').get('style', TextStyle())
 
     @title_style.setter
     def title_style(self, value: TextStyle):
@@ -30,7 +30,7 @@ class Plot:
 
     @property
     def title_position(self) -> TextPosition:
-        return self._data.get('title').get('position')
+        return self._data.get('title').get('position', TextPosition())
 
     @title_position.setter
     def title_position(self, value):
@@ -75,3 +75,11 @@ class Plot:
     def set_y_lim(self, bottom=None, up=None):
         self._data['y_label']['min'] = bottom
         self._data['y_label']['max'] = up
+
+    @abstractmethod
+    def show(self):
+        warn('abstract show')
+
+    @abstractmethod
+    def save(self, output):
+        warn('abstract save')

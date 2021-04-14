@@ -39,7 +39,7 @@ class TextPosition:
 
     @property
     def location(self):
-        return self.location
+        return self._location
 
     @property
     def y(self):
