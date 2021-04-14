@@ -12,7 +12,6 @@ def create_plot_with_plotly() -> Plot:
 
 
 def create_plot(name: str):
-    print(Plot.__subclasses__())
     for elt in Plot.__subclasses__():
         if elt.name == name.lower():
             return globals()[elt.__name__]()
