@@ -24,3 +24,16 @@ class TestMPL(TestCase):
         title = "y"
         self._plot.y_label = title
         self.assertEqual(self._plot._ax.get_ylabel(), title)
+
+    def test_lim(self):
+        self._plot.x_lim = 0, 10
+        self._plot.y_lim = 0, 10
+
+        self.assertEqual(0, self._plot.x_min)
+        self.assertEqual(10, self._plot.x_max)
+
+        self.assertEqual(0, self._plot.y_min)
+        self.assertEqual(10, self._plot.y_max)
+
+        self.assertEqual((0, 10), self._plot.x_lim)
+        self.assertEqual((0, 10), self._plot.y_lim)
