@@ -44,3 +44,20 @@ class TextPosition:
     @property
     def y(self):
         return self._y
+
+
+class Legend:
+    def __init__(self, label=None, **kwargs):
+        if label is None:
+            label = []
+        self._label = label
+        self._dict = {}
+        self._dict.update(kwargs)
+
+    @property
+    def labels(self):
+        return self._label
+
+    @property
+    def options(self):
+        return self._dict
