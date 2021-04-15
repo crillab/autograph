@@ -133,7 +133,7 @@ class Plot:
         self._data['legend'] = value
 
     @abstractmethod
-    def plot(self, x, y, **kwargs):
+    def plot(self, x, y, style=None, **kwargs):
         warn('abstract plot')
 
     @abstractmethod

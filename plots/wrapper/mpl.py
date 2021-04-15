@@ -1,3 +1,6 @@
+from matplotlib.axes import Axes
+from matplotlib.figure import Figure
+
 from plots.core.plot import Plot
 import matplotlib.pyplot as plt
 
@@ -9,7 +12,9 @@ class MPL(Plot):
 
     def __init__(self):
         super().__init__()
-        self._figure, self._ax = plt.subplots()
+        f, a = plt.subplots()
+        self._figure: Figure = f
+        self._ax: Axes = a
 
     def __change_title(self):
         if self.title is None:
@@ -80,10 +85,20 @@ class MPL(Plot):
         self._figure.savefig(output, **kwargs)
 
     def plot(self, x, y, style=None, **kwargs):
+        line_width = kwargs.get("line_width", 2)
+        show_marker = kwargs.get("show_marker", False)
+        label = kwargs.get("label", None)
+        symbol = kwargs.get("symbol", None)
+
+        d = {
+            'linewidth': line_width,
+            'marker': 'o' if show_marker else None,
+        }
+
         if style is None:
-            self._ax.plot(x, y, style, **kwargs)
+            self._ax.plot(x, y, style, label=label, **d)
         else:
-            self._ax.plot(x, y, **kwargs)
+            self._ax.plot(x, y, label=label, **d)
 
     def scatter(self, x, y, **kwargs):
         self._ax.scatter(x, y, **kwargs)
