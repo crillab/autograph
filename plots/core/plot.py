@@ -76,10 +76,26 @@ class Plot:
         self._data['y_label']['min'] = bottom
         self._data['y_label']['max'] = up
 
+    @property
+    def legend(self):
+        return self._data.get('legend')
+
+    @legend.setter
+    def legend(self, value):
+        self._data['legend'] = value
+
+    @abstractmethod
+    def plot(self, x, y, **kwargs):
+        warn('abstract plot')
+
+    @abstractmethod
+    def scatter(self, x, y, **kwargs):
+        warn('abstract plot')
+
     @abstractmethod
     def show(self):
         warn('abstract show')
 
     @abstractmethod
-    def save(self, output):
+    def save(self, output, **kwargs):
         warn('abstract save')
