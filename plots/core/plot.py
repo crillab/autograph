@@ -68,6 +68,54 @@ class Plot:
     def log_y(self, value: bool):
         self._data['y_axis']['log'] = value
 
+    @property
+    def x_min(self):
+        return self._data.get("x_label", {}).get("min", None)
+
+    @x_min.setter
+    def x_min(self, value):
+        self.set_x_lim(left=value)
+
+    @property
+    def x_max(self):
+        return self._data.get("x_label", {}).get("max", None)
+
+    @x_max.setter
+    def x_max(self, value):
+        self.set_x_lim(right=value)
+
+    @property
+    def y_min(self):
+        return self._data.get("y_label", {}).get("min", None)
+
+    @y_min.setter
+    def y_min(self, value):
+        self.set_y_lim(bottom=value)
+
+    @property
+    def y_max(self):
+        return self._data.get("y_label", {}).get("max", None)
+
+    @y_max.setter
+    def y_max(self, value):
+        self.set_y_lim(up=value)
+
+    @property
+    def x_lim(self):
+        return self.x_min, self.x_max
+
+    @x_lim.setter
+    def x_lim(self, value):
+        self.set_x_lim(left=value[0], right=value[1])
+
+    @property
+    def y_lim(self):
+        return self.y_min, self.y_max
+
+    @y_lim.setter
+    def y_lim(self, value):
+        self.set_y_lim(bottom=value[0], up=value[1])
+
     def set_x_lim(self, left=None, right=None):
         self._data['x_label']['min'] = left
         self._data['x_label']['max'] = right
