@@ -40,6 +40,10 @@ class Plotly(Plot):
     def log_y(self, value):
         Plot.log_y.fset(self, value)
 
+    @property
+    def legend(self):
+        return super().legend()
+
     def set_x_lim(self, left=None, right=None):
         super().set_x_lim(left, right)
 
@@ -49,5 +53,11 @@ class Plotly(Plot):
     def show(self):
         return go.Figure(data=self._data_plotly, layout=self._layout_plotly)
 
-    def save(self, output):
+    def plot(self, x, y, **kwargs):
+        pass
+
+    def scatter(self, x, y, **kwargs):
+        pass
+
+    def save(self, output, **kwargs):
         pass

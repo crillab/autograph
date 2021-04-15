@@ -1,7 +1,7 @@
 from plots.core.plot import Plot
 import matplotlib.pyplot as plt
 
-from plots.core.style import TextStyle, TextPosition
+from plots.core.style import TextStyle, TextPosition, Legend
 
 
 class MPL(Plot):
@@ -56,6 +56,11 @@ class MPL(Plot):
         Plot.log_y.fset(self, value)
         self._ax.set_yscale('log' if self.log_y else 'linear')
 
+    @Plot.legend.setter
+    def legend(self, value: Legend):
+        Plot.legend.fset(self, value)
+        self._ax.legend(value.labels, **value.options)
+
     def set_x_lim(self, left=None, right=None):
         super().set_x_lim(left, right)
         left = left if left is not None else self._ax.get_xlim()[0]
@@ -71,5 +76,14 @@ class MPL(Plot):
     def show(self):
         return self._ax
 
-    def save(self, output):
-        pass
+    def save(self, output, **kwargs):
+        self._figure.savefig(output, **kwargs)
+
+    def plot(self, x, y, style=None, **kwargs):
+        if style is None:
+            self._ax.plot(x, y, style, **kwargs)
+        else:
+            self._ax.plot(x, y, **kwargs)
+
+    def scatter(self, x, y, **kwargs):
+        self._ax.scatter(x, y, **kwargs)
