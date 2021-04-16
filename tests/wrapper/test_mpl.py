@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from plots import create_plot, Plot
-from plots.core.style import TextStyle
+from autograph import create_plot, Plot
+from autograph.core.style import TextStyle
 
 
 class TestMPL(TestCase):
