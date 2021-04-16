@@ -1,10 +1,13 @@
+from typing import Optional
+
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
-from plots.core.plot import Plot
+from autograph.core.enumstyle import MarkerShape, LineType
+from autograph.core.plot import Plot, Legend
 import matplotlib.pyplot as plt
 
-from plots.core.style import TextStyle, TextPosition, Legend
+from autograph.core.style import TextStyle, TextPosition, PlotStyle
 
 
 class MPL(Plot):
@@ -19,12 +22,19 @@ class MPL(Plot):
     def __change_title(self):
         if self.title is None:
             return
-
-        self._ax.set_title(self.title, fontdict={
+        kwargs = {'fontdict': {
             'fontsize': self.title_style.size,
             'fontweight': self.title_style.weight,
-            'color': self.title_style.color,
-        }, loc=self.title_position.location, pad=self.title_position.pad, y=self.title_position.y)
+        }}
+
+        if self.title_position.y is not None:
+            kwargs["y"] = self.title_position.y
+        if self.title_position.location is not None:
+            kwargs["loc"] = self.title_position.location
+
+        if self.title_position.pad is not None:
+            kwargs["pad"] = self.title_position.pad
+        self._ax.set_title(self.title, **kwargs)
 
     @Plot.title.setter
     def title(self, value):
@@ -78,27 +88,46 @@ class MPL(Plot):
         up = up if up is not None else self._ax.get_ylim()[1]
         self._ax.set_ylim([bottom, up])
 
+    @Plot.legend.setter
+    def legend(self, value):
+        Plot.legend.fset(self, value)
+        self._ax.legend(self.legend.labels)
+
     def show(self):
         return self._ax
 
     def save(self, output, **kwargs):
         self._figure.savefig(output, **kwargs)
 
-    def plot(self, x, y, style=None, **kwargs):
-        line_width = kwargs.get("line_width", 2)
-        show_marker = kwargs.get("show_marker", False)
-        label = kwargs.get("label", None)
-        symbol = kwargs.get("symbol", None)
+    def plot(self, x, y, label=None, style: Optional[PlotStyle] = None):
+        self._internal_plot(x, y, label, style, self._ax.plot)
 
-        d = {
-            'linewidth': line_width,
-            'marker': 'o' if show_marker else None,
-        }
+    def _style_as_kwargs(self, style):
+        kwargs = {}
+        if style.line_weight is not None:
+            kwargs['linewidth'] = style.line_weight
+        if style.line_type is not None:
+            kwargs['linestyle'] = self._line_type_as_string(style.line_type)
+        if style.marker_weight is not None:
+            kwargs['markersize'] = style.marker_weight
+        if style.marker_shape is not None:
+            kwargs['marker'] = self._marker_shape_as_string(style.marker_shape)
+        if style.color is not None:
+            kwargs['color'] = style.color
+        return kwargs
 
+    def scatter(self, x, y, label=None, style: Optional[PlotStyle] = None):
+        self._internal_plot(x, y, label, style, self._ax.scatter)
+
+    def _internal_plot(self, x, y, label, style: Optional[PlotStyle], plot_function):
         if style is None:
-            self._ax.plot(x, y, style, label=label, **d)
-        else:
-            self._ax.plot(x, y, label=label, **d)
+            plot_function(x, y, label=label)
+            return
+        kwargs = self._style_as_kwargs(style)
+        plot_function(x, y, label=label, **kwargs)
 
-    def scatter(self, x, y, **kwargs):
-        self._ax.scatter(x, y, **kwargs)
+    def _line_type_as_string(self, line_type: LineType):
+        return line_type.mpl_string
+
+    def _marker_shape_as_string(self, shape: MarkerShape):
+        return shape.mpl_string

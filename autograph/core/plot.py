@@ -1,8 +1,25 @@
 from abc import abstractmethod
 from collections import defaultdict
-from warnings import warn
+from typing import Optional
 
-from plots.core.style import TextStyle, TextPosition
+from autograph.core.enumstyle import LineType, MarkerShape
+from autograph.core.style import TextStyle, TextPosition, PlotStyle
+
+
+class Legend:
+    def __init__(self, label=None, **kwargs):
+        if label is None:
+            label = []
+        self._label = label
+        self._dict = kwargs
+
+    @property
+    def labels(self):
+        return self._label
+
+    @property
+    def options(self):
+        return self._dict
 
 
 class Plot:
@@ -50,19 +67,19 @@ class Plot:
 
     @y_label.setter
     def y_label(self, value):
-        self._data['y_label']['label'] = value
+        self._data['y_axis']['label'] = value
 
     @property
     def log_x(self):
-        return self._data.get('y_axis').get('log', False)
+        return self._data.get('x_axis', {}).get('log', False)
 
     @log_x.setter
     def log_x(self, value: bool):
-        self._data['x_label']['log'] = value
+        self._data['x_axis']['log'] = value
 
     @property
     def log_y(self):
-        return self._data.get('y_axis').get('log', False)
+        return self._data.get('y_axis', {}).get('log', False)
 
     @log_y.setter
     def log_y(self, value: bool):
@@ -70,7 +87,7 @@ class Plot:
 
     @property
     def x_min(self):
-        return self._data.get("x_label", {}).get("min", None)
+        return self._data.get("x_axis", {}).get("min")
 
     @x_min.setter
     def x_min(self, value):
@@ -78,7 +95,7 @@ class Plot:
 
     @property
     def x_max(self):
-        return self._data.get("x_label", {}).get("max", None)
+        return self._data.get("x_axis", {}).get("max")
 
     @x_max.setter
     def x_max(self, value):
@@ -86,7 +103,7 @@ class Plot:
 
     @property
     def y_min(self):
-        return self._data.get("y_label", {}).get("min", None)
+        return self._data.get("y_axis", {}).get("min")
 
     @y_min.setter
     def y_min(self, value):
@@ -94,7 +111,7 @@ class Plot:
 
     @property
     def y_max(self):
-        return self._data.get("y_label", {}).get("max", None)
+        return self._data.get("y_axis", {}).get("max")
 
     @y_max.setter
     def y_max(self, value):
@@ -117,12 +134,12 @@ class Plot:
         self.set_y_lim(bottom=value[0], up=value[1])
 
     def set_x_lim(self, left=None, right=None):
-        self._data['x_label']['min'] = left
-        self._data['x_label']['max'] = right
+        self._data['x_axis']['min'] = left
+        self._data['x_axis']['max'] = right
 
     def set_y_lim(self, bottom=None, up=None):
-        self._data['y_label']['min'] = bottom
-        self._data['y_label']['max'] = up
+        self._data['y_axis']['min'] = bottom
+        self._data['y_axis']['max'] = up
 
     @property
     def legend(self):
@@ -133,17 +150,25 @@ class Plot:
         self._data['legend'] = value
 
     @abstractmethod
-    def plot(self, x, y, style=None, **kwargs):
-        warn('abstract plot')
+    def plot(self, x, y, label=None, style: Optional[PlotStyle] = None):
+        raise NotImplementedError
 
     @abstractmethod
-    def scatter(self, x, y, **kwargs):
-        warn('abstract plot')
+    def scatter(self, x, y, label=None, style: Optional[PlotStyle] = None):
+        raise NotImplementedError
 
     @abstractmethod
     def show(self):
-        warn('abstract show')
+        raise NotImplementedError
 
     @abstractmethod
     def save(self, output, **kwargs):
-        warn('abstract save')
+        raise NotImplementedError
+
+    @abstractmethod
+    def _line_type_as_string(self, line_type: LineType):
+        raise NotImplementedError
+
+    @abstractmethod
+    def _marker_shape_as_string(self, shape: MarkerShape):
+        raise NotImplementedError
