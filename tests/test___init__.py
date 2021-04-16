@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from plots import create_plot, MPL
-from plots.wrapper.plotly import Plotly
+from autograph import create_plot, MPL
+from autograph.wrapper.plotly import Plotly
 
 
 class Test(TestCase):
