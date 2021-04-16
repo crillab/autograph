@@ -3,11 +3,11 @@ from typing import Optional
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
-from autograph.core.enumstyle import MarkerShape, LineType
-from autograph.core.plot import Plot, Legend
+from autograph.core.enumstyle import MarkerShape, LineType, Position
+from autograph.core.plot import Plot
 import matplotlib.pyplot as plt
 
-from autograph.core.style import TextStyle, TextPosition, PlotStyle
+from autograph.core.style import TextStyle, TextPosition, PlotStyle, LegendStyle
 
 
 class MPL(Plot):
@@ -71,11 +71,6 @@ class MPL(Plot):
         Plot.log_y.fset(self, value)
         self._ax.set_yscale('log' if self.log_y else 'linear')
 
-    @Plot.legend.setter
-    def legend(self, value: Legend):
-        Plot.legend.fset(self, value)
-        self._ax.legend(value.labels, **value.options)
-
     def set_x_lim(self, left=None, right=None):
         super().set_x_lim(left, right)
         left = left if left is not None else self._ax.get_xlim()[0]
@@ -89,9 +84,12 @@ class MPL(Plot):
         self._ax.set_ylim([bottom, up])
 
     @Plot.legend.setter
-    def legend(self, value):
+    def legend(self, value: LegendStyle):
         Plot.legend.fset(self, value)
-        self._ax.legend(self.legend.labels)
+        kwargs = self._legend_position_as_mpl(value.position)
+        kwargs['title'] = value.title
+        kwargs['ncol'] = value.n_col
+        self._ax.legend(**kwargs)
 
     def show(self):
         return self._ax
@@ -131,3 +129,13 @@ class MPL(Plot):
 
     def _marker_shape_as_string(self, shape: MarkerShape):
         return shape.mpl_string
+
+    def _legend_position_as_mpl(self, position: Position):
+        if position == Position.TOP:
+            return dict(loc="lower center", bbox_to_anchor=(.5, 1.1))
+        if position == Position.RIGHT:
+            return dict(loc="center left", bbox_to_anchor=(1.1, .5))
+        if position == Position.BOTTOM:
+            return dict(loc="upper center", bbox_to_anchor=(.5, -.1))
+        if position == Position.LEFT:
+            return dict(loc="center right", bbox_to_anchor=(-.1, .5))

@@ -3,23 +3,7 @@ from collections import defaultdict
 from typing import Optional
 
 from autograph.core.enumstyle import LineType, MarkerShape
-from autograph.core.style import TextStyle, TextPosition, PlotStyle
-
-
-class Legend:
-    def __init__(self, label=None, **kwargs):
-        if label is None:
-            label = []
-        self._label = label
-        self._dict = kwargs
-
-    @property
-    def labels(self):
-        return self._label
-
-    @property
-    def options(self):
-        return self._dict
+from autograph.core.style import TextStyle, TextPosition, PlotStyle, LegendStyle
 
 
 class Plot:
@@ -27,7 +11,6 @@ class Plot:
 
     def __init__(self):
         self._data = defaultdict(dict)
-        self._layout = defaultdict(dict)
 
     @property
     def title(self):
@@ -146,7 +129,7 @@ class Plot:
         return self._data.get('legend')
 
     @legend.setter
-    def legend(self, value):
+    def legend(self, value: LegendStyle):
         self._data['legend'] = value
 
     @abstractmethod

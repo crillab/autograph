@@ -1,6 +1,35 @@
 from matplotlib import rcParams
 
-from autograph.core.enumstyle import LineType,  MarkerShape
+from autograph.core.enumstyle import LineType, MarkerShape, Position
+
+
+class LegendStyle:
+    def __init__(self):
+        self._data = {}
+
+    @property
+    def position(self):
+        return self._data.get('position', Position.BOTTOM)
+
+    @position.setter
+    def position(self, value):
+        self._data['position'] = value
+
+    @property
+    def n_col(self):
+        return self._data.get('n_col', 1)
+
+    @n_col.setter
+    def n_col(self, value):
+        self._data['n_col'] = value
+
+    @property
+    def title(self):
+        return self._data.get('title', None)
+
+    @title.setter
+    def title(self, value):
+        self._data['title'] = value
 
 
 class TextStyle:
