@@ -66,15 +66,15 @@ class MPL(Plot):
         Plot.title.fset(self, value)
         self.__change_title()
 
-    @Plot.title_position.setter
-    def title_position(self, value):
-        Plot.title_position.fset(self, value)
-        self.__change_title()
-
-    @Plot.title_style.setter
-    def title_style(self, value):
-        Plot.title_style.fset(self, value)
-        self.__change_title()
+    # @Plot.title_position.setter
+    # def title_position(self, value):
+    #     Plot.title_position.fset(self, value)
+    #     self.__change_title()
+    #
+    # @Plot.title_style.setter
+    # def title_style(self, value):
+    #     Plot.title_style.fset(self, value)
+    #     self.__change_title()
 
     @Plot.x_label.setter
     def x_label(self, value):
@@ -108,13 +108,23 @@ class MPL(Plot):
         up = up if up is not None else self._ax.get_ylim()[1]
         self._ax.set_ylim([bottom, up])
 
-    @Plot.legend.setter
-    def legend(self, value: LegendStyle):
-        Plot.legend.fset(self, value)
+    def _set_legend(self, value: LegendStyle):
+        super()._set_legend(value)
+        value.set_upadte_function(self._set_legend)
         kwargs = self._legend_position_as_mpl(value.position)
         kwargs['title'] = value.title
         kwargs['ncol'] = value.n_col
         self._ax.legend(**kwargs)
+
+    def _set_title_style(self, value: TextStyle):
+        super()._set_title_style(value)
+        value.set_upadte_function(self._set_title_style)
+        self.__change_title()
+
+    def _set_title_position(self, value: TextPosition):
+        super()._set_title_position(value)
+        value.set_upadte_function(self._set_title_position)
+        self.__change_title()
 
     def show(self):
         return self._figure, self._ax
