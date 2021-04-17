@@ -58,23 +58,40 @@ class LegendStyle:
 
 
 class TextStyle:
-    def __init__(self, size='larger', weight='bold',
-                 color=None, **kwargs):
-        self._size = size
-        self._weight = weight
-        self._color = color
+    def __init__(self):
+        self._data = {}
 
     @property
     def size(self):
-        return self._size
+        return self._data.get("size")
+
+    @size.setter
+    def size(self, value):
+        self._data["size"] = value
 
     @property
     def weight(self):
-        return self._weight
+        return self._data.get("weight")
+
+    @weight.setter
+    def weight(self, value):
+        self._data["weight"] = value
 
     @property
     def color(self):
-        return self._color
+        return self._data.get("color")
+
+    @color.setter
+    def color(self, value):
+        self._data["color"] = value
+
+    @property
+    def font_name(self):
+        return self._data.get("font_name")
+
+    @font_name.setter
+    def font_name(self, value):
+        self._data["font_name"] = value
 
 
 class TextPosition:
