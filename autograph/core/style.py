@@ -28,9 +28,22 @@ from matplotlib import rcParams
 from autograph.core.enumstyle import LineType, MarkerShape, Position
 
 
-class LegendStyle:
+class AbstractStyle:
     def __init__(self):
         self._data = {}
+        self._plot = None
+        self._update_function = None
+
+    def set_plot(self, plot):
+        self._plot = plot
+
+    def set_upadte_function(self, call):
+        self._update_function = call
+
+
+class LegendStyle(AbstractStyle):
+    def __init__(self):
+        super().__init__()
 
     @property
     def position(self):
@@ -39,6 +52,7 @@ class LegendStyle:
     @position.setter
     def position(self, value):
         self._data['position'] = value
+        self._update_function(self)
 
     @property
     def n_col(self):
@@ -47,6 +61,7 @@ class LegendStyle:
     @n_col.setter
     def n_col(self, value):
         self._data['n_col'] = value
+        self._update_function(self)
 
     @property
     def title(self):
@@ -55,11 +70,12 @@ class LegendStyle:
     @title.setter
     def title(self, value):
         self._data['title'] = value
+        self._update_function(self)
 
 
-class TextStyle:
+class TextStyle(AbstractStyle):
     def __init__(self):
-        self._data = {}
+        super().__init__()
 
     @property
     def size(self):
@@ -68,6 +84,7 @@ class TextStyle:
     @size.setter
     def size(self, value):
         self._data["size"] = value
+        self._update_function(self)
 
     @property
     def weight(self):
@@ -76,6 +93,7 @@ class TextStyle:
     @weight.setter
     def weight(self, value):
         self._data["weight"] = value
+        self._update_function(self)
 
     @property
     def color(self):
@@ -84,6 +102,7 @@ class TextStyle:
     @color.setter
     def color(self, value):
         self._data["color"] = value
+        self._update_function(self)
 
     @property
     def font_name(self):
@@ -92,11 +111,12 @@ class TextStyle:
     @font_name.setter
     def font_name(self, value):
         self._data["font_name"] = value
+        self._update_function(self)
 
 
-class TextPosition:
+class TextPosition(AbstractStyle):
     def __init__(self):
-        self._data = {}
+        super().__init__()
 
     @property
     def pad(self):
@@ -123,9 +143,9 @@ class TextPosition:
         self._data['y'] = value
 
 
-class PlotStyle:
+class PlotStyle(AbstractStyle):
     def __init__(self):
-        self._data = {}
+        super().__init__()
 
     @property
     def color(self):
