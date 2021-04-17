@@ -9,9 +9,9 @@
 
 
 # The name of the package to build.
-PACKAGE_NAME = crillab-plots
+PACKAGE_NAME = crillab-autograph
 
-MODULE_NAME = plots
+MODULE_NAME = autograph
 
 # The version of the package to build.
 
