@@ -37,7 +37,7 @@ class AbstractStyle:
     def set_plot(self, plot):
         self._plot = plot
 
-    def set_upadte_function(self, call):
+    def set_update_function(self, call):
         self._update_function = call
 
 
