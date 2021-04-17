@@ -52,6 +52,7 @@ class Plot:
     @title_style.setter
     def title_style(self, value: TextStyle):
         self._data['title']['style'] = value
+        self._set_title_style(value)
 
     @property
     def title_position(self) -> TextPosition:
@@ -60,6 +61,7 @@ class Plot:
     @title_position.setter
     def title_position(self, value):
         self._data['title']['position'] = value
+        self._set_title_position(value)
 
     @property
     def x_label(self):
@@ -141,6 +143,15 @@ class Plot:
     def y_lim(self, value):
         self.set_y_lim(bottom=value[0], up=value[1])
 
+    @property
+    def legend(self):
+        return self._data.get('legend')
+
+    @legend.setter
+    def legend(self, value: LegendStyle):
+        self._data['legend'] = value
+        self._set_legend(value)
+
     def set_x_lim(self, left=None, right=None):
         self._data['x_axis']['min'] = left
         self._data['x_axis']['max'] = right
@@ -149,13 +160,14 @@ class Plot:
         self._data['y_axis']['min'] = bottom
         self._data['y_axis']['max'] = up
 
-    @property
-    def legend(self):
-        return self._data.get('legend')
+    def _set_legend(self, value: LegendStyle):
+        value.set_plot(self)
 
-    @legend.setter
-    def legend(self, value: LegendStyle):
-        self._data['legend'] = value
+    def _set_title_style(self, value: TextStyle):
+        value.set_plot(value)
+
+    def _set_title_position(self, value: TextPosition):
+        value.set_plot(value)
 
     @abstractmethod
     def plot(self, x, y, label=None, style: Optional[PlotStyle] = None):
