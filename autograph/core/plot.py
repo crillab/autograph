@@ -72,6 +72,42 @@ class Plot:
         self._data['x_axis']['label'] = value
 
     @property
+    def x_label_style(self):
+        return self._data.get('x_axis').get('style')
+
+    @x_label_style.setter
+    def x_label_style(self, value):
+        self._data['x_axis']['style'] = value
+        self._set_x_label_style(value)
+
+    @property
+    def y_label_style(self):
+        return self._data.get('y_axis').get('style')
+
+    @y_label_style.setter
+    def y_label_style(self, value):
+        self._data['y_axis']['style'] = value
+        self._set_y_label_style(value)
+
+    @property
+    def x_label_position(self):
+        return self._data.get('x_axis').get('position')
+
+    @x_label_position.setter
+    def x_label_position(self, value):
+        self._data['x_axis']['position'] = value
+        self._set_x_label_position(value)
+
+    @property
+    def y_label_position(self):
+        return self._data.get('y_axis').get('position')
+
+    @y_label_position.setter
+    def y_label_position(self, value):
+        self._data['y_axis']['position'] = value
+        self._set_y_label_position(value)
+
+    @property
     def y_label(self):
         return self._data.get('y_axis').get('label')
 
@@ -166,7 +202,19 @@ class Plot:
     def _set_title_style(self, value: TextStyle):
         value.set_plot(value)
 
+    def _set_x_label_style(self, value: TextStyle):
+        value.set_plot(value)
+
+    def _set_y_label_style(self, value: TextStyle):
+        value.set_plot(value)
+
     def _set_title_position(self, value: TextPosition):
+        value.set_plot(value)
+
+    def _set_x_label_position(self, value):
+        value.set_plot(value)
+
+    def _set_y_label_position(self, value):
         value.set_plot(value)
 
     @abstractmethod
