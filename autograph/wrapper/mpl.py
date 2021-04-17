@@ -117,7 +117,7 @@ class MPL(Plot):
         self._ax.legend(**kwargs)
 
     def show(self):
-        return self._ax
+        return self._figure, self._ax
 
     def save(self, output, **kwargs):
         self._figure.savefig(output, **kwargs)
