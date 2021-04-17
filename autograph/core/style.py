@@ -95,28 +95,32 @@ class TextStyle:
 
 
 class TextPosition:
-    def __init__(self, pad=6.0, location='center', y=None):
-        """
-
-        :param pad: pad between axes and text in points
-        :param location: alignment of the text: {left, right, center}
-        :param y: position text (axes relative units).  None implies auto
-        """
-        self._pad = pad
-        self._location = location
-        self._y = y
+    def __init__(self):
+        self._data = {}
 
     @property
     def pad(self):
-        return self._pad
+        return self._data.get("pad")
+
+    @pad.setter
+    def pad(self, value):
+        self._data['pad'] = value
 
     @property
     def location(self):
-        return self._location
+        return self._data.get("location")
+
+    @location.setter
+    def location(self, value):
+        self._data['location'] = value
 
     @property
     def y(self):
-        return self._y
+        return self._data.get("y")
+
+    @y.setter
+    def y(self, value):
+        self._data['y'] = value
 
 
 class PlotStyle:
