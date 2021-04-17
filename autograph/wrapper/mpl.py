@@ -47,44 +47,57 @@ class MPL(Plot):
     def __change_title(self):
         if self.title is None:
             return
+        kwargs = self.__text_style_and_position_as_kwargs(self.title_style, self.title_position)
+        self._ax.set_title(self.title, **kwargs)
+
+    def __change_x_label(self):
+        if self.x_label is None:
+            return
+        kwargs = self.__text_style_and_position_as_kwargs(self.x_label_style, self.x_label_position)
+        self._ax.set_xlabel(self.x_label, **kwargs)
+
+    def __change_y_label(self):
+        if self.y_label is None:
+            return
+        kwargs = self.__text_style_and_position_as_kwargs(self.y_label_style, self.y_label_position)
+        self._ax.set_ylabel(self.y_label, **kwargs)
+
+    def __text_style_and_position_as_kwargs(self, text_style, text_position):
         kwargs = {'fontdict': {
-            'fontsize': self.title_style.size,
-            'fontweight': self.title_style.weight,
+
         }}
 
-        if self.title_position.y is not None:
-            kwargs["y"] = self.title_position.y
-        if self.title_position.location is not None:
-            kwargs["loc"] = self.title_position.location
+        if text_style is not None and text_style.size is not None:
+            kwargs['fontdict']['fontsize'] = text_style.size
+        if text_style is not None and text_style.weight is not None:
+            kwargs['fontdict']['fontweight'] = text_style.weight
+        if text_style is not None and text_style.color is not None:
+            kwargs['fontdict']['color'] = text_style.color
+        if text_style is not None and text_style.font_name is not None:
+            kwargs['fontdict']['fontname'] = text_style.font_name
 
-        if self.title_position.pad is not None:
-            kwargs["pad"] = self.title_position.pad
-        self._ax.set_title(self.title, **kwargs)
+        if text_position is not None and text_position.y is not None:
+            kwargs["y"] = text_position.y
+        if text_position is not None and text_position.location is not None:
+            kwargs["loc"] = text_position.location
+        if text_position is not None and text_position.pad is not None:
+            kwargs["pad"] = text_position.pad
+        return kwargs
 
     @Plot.title.setter
     def title(self, value):
         Plot.title.fset(self, value)
         self.__change_title()
 
-    # @Plot.title_position.setter
-    # def title_position(self, value):
-    #     Plot.title_position.fset(self, value)
-    #     self.__change_title()
-    #
-    # @Plot.title_style.setter
-    # def title_style(self, value):
-    #     Plot.title_style.fset(self, value)
-    #     self.__change_title()
-
     @Plot.x_label.setter
     def x_label(self, value):
         Plot.x_label.fset(self, value)
-        self._ax.set_xlabel(value)
+        self.__change_x_label()
 
     @Plot.y_label.setter
     def y_label(self, value):
         Plot.y_label.fset(self, value)
-        self._ax.set_ylabel(value)
+        self.__change_y_label()
 
     @Plot.log_x.setter
     def log_x(self, value):
@@ -110,7 +123,7 @@ class MPL(Plot):
 
     def _set_legend(self, value: LegendStyle):
         super()._set_legend(value)
-        value.set_upadte_function(self._set_legend)
+        value.set_update_function(self._set_legend)
         kwargs = self._legend_position_as_mpl(value.position)
         kwargs['title'] = value.title
         kwargs['ncol'] = value.n_col
@@ -118,13 +131,33 @@ class MPL(Plot):
 
     def _set_title_style(self, value: TextStyle):
         super()._set_title_style(value)
-        value.set_upadte_function(self._set_title_style)
+        value.set_update_function(self._set_title_style)
         self.__change_title()
 
     def _set_title_position(self, value: TextPosition):
         super()._set_title_position(value)
-        value.set_upadte_function(self._set_title_position)
+        value.set_update_function(self._set_title_position)
         self.__change_title()
+
+    def _set_x_label_style(self, value: TextStyle):
+        super()._set_x_label_style(value)
+        value.set_update_function(self._set_x_label_style)
+        self.__change_x_label()
+
+    def _set_y_label_style(self, value: TextStyle):
+        super()._set_y_label_style(value)
+        value.set_update_function(self._set_y_label_style)
+        self.__change_y_label()
+
+    def _set_x_label_position(self, value: TextPosition):
+        super()._set_x_label_position(value)
+        value.set_update_function(self._set_x_label_position)
+        self.__change_x_label()
+
+    def _set_y_label_position(self, value: TextPosition):
+        super()._set_y_label_position(value)
+        value.set_update_function(self._set_y_label_position)
+        self.__change_y_label()
 
     def show(self):
         return self._figure, self._ax
