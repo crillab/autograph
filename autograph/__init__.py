@@ -28,9 +28,31 @@ from autograph.wrapper.mpl import MPL
 from autograph.wrapper.plotly import Plotly
 
 
-
 def create_plot(name: str):
     for elt in Plot.__subclasses__():
         if elt.name == name.lower():
             return globals()[elt.__name__]()
     raise ValueError(f'{name} is not a valid class')
+
+
+__all__ = [
+    '__title__',
+    '__summary__',
+    '__uri__',
+    '__version__',
+    '__author__',
+    '__email__',
+    '__license__',
+    '__copyright__',
+]
+
+__title__ = 'autograph'
+__summary__ = 'AUtogRAPH - A Unified libRary for drAwing Plots in pytHon'
+__keywords__ = 'visualization plots'
+__uri__ = 'https://github.com/crillab/autograph'
+__version__ = '0.0.1'
+__author__ = 'Thibault Falque, Romain Wallon, Hugues Wattez'
+__email__ = 'thibault.falque@exakis-nelite.com, wallon@lix.polytechnique.fr, wattez@cril.fr'
+
+__license__ = 'MIT'
+__copyright__ = '2021-2022 - Univ Artois & CNRS, Exakis Nelite'
