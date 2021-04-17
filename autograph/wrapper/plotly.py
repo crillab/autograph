@@ -26,6 +26,7 @@
 from collections import defaultdict
 from math import log10
 
+from autograph.core.enumstyle import MarkerShape, LineType
 from autograph.core.plot import Plot
 import plotly.graph_objects as go
 import plotly.io as pio
@@ -132,3 +133,9 @@ class Plotly(Plot):
 
     def save(self, output, **kwargs):
         pass
+
+    def _line_type_as_string(self, line_type: LineType):
+        return line_type.plotly_string
+
+    def _marker_shape_as_string(self, shape: MarkerShape):
+        return shape.plotly_string
