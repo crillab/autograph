@@ -1,0 +1,15 @@
+<component name="CopyrightManager">
+  <settings default="exakis nelite + cril">
+    <module2copyright>
+      <element module="All" copyright="exakis nelite + cril" />
+    </module2copyright>
+    <LanguageOptions name="Python">
+      <option name="fileTypeOverride" value="3" />
+      <option name="block" value="false" />
+      <option name="separateBefore" value="true" />
+      <option name="separateAfter" value="true" />
+      <option name="box" value="true" />
+      <option name="filler" value="#" />
+    </LanguageOptions>
+  </settings>
+</component>
