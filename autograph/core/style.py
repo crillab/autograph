@@ -210,7 +210,7 @@ class BoxStyle(AbstractStyle):
 
     @property
     def vert(self):
-        return self._data.get("vert")
+        return self._data.get("vert", False)
 
     @vert.setter
     def vert(self, value):

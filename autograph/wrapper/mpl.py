@@ -134,7 +134,8 @@ class MPL(Plot):
         self._internal_plot(x, y, label, style, self._ax.plot)
 
     def boxplot(self, x, labels=None, style: BoxStyle = BoxStyle()):
-        self._ax.boxplot(x, labels=labels, meanline=style.mean_line, showmeans=style.show_mean, vert=False)
+        self._ax.boxplot(x, labels=labels, meanline=style.mean_line, showmeans=style.show_mean,
+                         vert=style.vert)
 
     def _style_as_kwargs(self, style):
         kwargs = {}
