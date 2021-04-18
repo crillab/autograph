@@ -25,7 +25,7 @@
 
 from matplotlib import rcParams
 
-from autograph.core.enumstyle import LineType, MarkerShape, Position
+from autograph.core.enumstyle import LineType, MarkerShape, Position, FontWeight
 
 
 class AbstractStyle:
@@ -87,11 +87,11 @@ class TextStyle(AbstractStyle):
         self._update_function(self)
 
     @property
-    def weight(self):
+    def weight(self)->FontWeight:
         return self._data.get("weight")
 
     @weight.setter
-    def weight(self, value):
+    def weight(self, value: FontWeight):
         self._data["weight"] = value
         self._update_function(self)
 

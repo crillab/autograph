@@ -68,6 +68,18 @@ class MarkerShape(EnumStyle):
     PLUS_THIN = "+", "cross-thin"
 
 
+class FontWeight(EnumStyle):
+    BOLD = "bold", "<span style='font-weight:bold'>{}</span>"
+    NORMAL = "normal", "<span style='font-weight:normal'>{}</span>"
+    N_100 = 100, "<span style='font-weight:100'>{}</span>"
+    N_200 = 200, "<span style='font-weight:200'>{}</span>"
+    N_300 = 300, "<span style='font-weight:300'>{}</span>"
+    N_400 = 400, "<span style='font-weight:400'>{}</span>"
+    N_600 = 600, "<span style='font-weight:600'>{}</span>"
+    N_800 = 800, "<span style='font-weight:800'>{}</span>"
+    N_900 = 900, "<span style='font-weight:900'>{}</span>"
+
+
 class Position(Enum):
     TOP = auto()
     LEFT = auto()
