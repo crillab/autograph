@@ -38,6 +38,14 @@ class Plot:
         self._data = defaultdict(dict)
 
     @property
+    def figure_size(self):
+        return self._data.get('figure_size')
+
+    @figure_size.setter
+    def figure_size(self, value):
+        self._data['figure_size'] = value
+
+    @property
     def title(self):
         return self._data.get('title', {}).get('text')
 
@@ -223,6 +231,9 @@ class Plot:
 
     @abstractmethod
     def scatter(self, x, y, label=None, style: Optional[PlotStyle] = None):
+        raise NotImplementedError
+
+    def boxplot(self, x):
         raise NotImplementedError
 
     @abstractmethod

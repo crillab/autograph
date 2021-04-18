@@ -44,45 +44,10 @@ class MPL(Plot):
         self._figure: Figure = f
         self._ax: Axes = a
 
-    def __change_title(self):
-        if self.title is None:
-            return
-        kwargs = self.__text_style_and_position_as_kwargs(self.title_style, self.title_position)
-        self._ax.set_title(self.title, **kwargs)
-
-    def __change_x_label(self):
-        if self.x_label is None:
-            return
-        kwargs = self.__text_style_and_position_as_kwargs(self.x_label_style, self.x_label_position)
-        self._ax.set_xlabel(self.x_label, **kwargs)
-
-    def __change_y_label(self):
-        if self.y_label is None:
-            return
-        kwargs = self.__text_style_and_position_as_kwargs(self.y_label_style, self.y_label_position)
-        self._ax.set_ylabel(self.y_label, **kwargs)
-
-    def __text_style_and_position_as_kwargs(self, text_style, text_position):
-        kwargs = {'fontdict': {
-
-        }}
-
-        if text_style is not None and text_style.size is not None:
-            kwargs['fontdict']['fontsize'] = text_style.size
-        if text_style is not None and text_style.weight is not None:
-            kwargs['fontdict']['fontweight'] = text_style.weight.mpl_string
-        if text_style is not None and text_style.color is not None:
-            kwargs['fontdict']['color'] = text_style.color
-        if text_style is not None and text_style.font_name is not None:
-            kwargs['fontdict']['fontname'] = text_style.font_name
-
-        if text_position is not None and text_position.y is not None:
-            kwargs["y"] = text_position.y
-        if text_position is not None and text_position.location is not None:
-            kwargs["loc"] = text_position.location
-        if text_position is not None and text_position.pad is not None:
-            kwargs["pad"] = text_position.pad
-        return kwargs
+    @Plot.figure_size.setter
+    def figure_size(self, value: tuple):
+        Plot.figure_size.fset(self, value)
+        self._figure.set_size_inches(value[0], value[1])
 
     @Plot.title.setter
     def title(self, value):
@@ -168,6 +133,9 @@ class MPL(Plot):
     def plot(self, x, y, label=None, style: Optional[PlotStyle] = None):
         self._internal_plot(x, y, label, style, self._ax.plot)
 
+    def boxplot(self, x, labels=None):
+        self._ax.boxplot(x, labels=labels, meanline=True, showmeans=True, vert=False)
+
     def _style_as_kwargs(self, style):
         kwargs = {}
         if style.line_weight is not None:
@@ -207,3 +175,43 @@ class MPL(Plot):
             return dict(loc="upper center", bbox_to_anchor=(.5, -.1))
         if position == Position.LEFT:
             return dict(loc="center right", bbox_to_anchor=(-.1, .5))
+
+    def __change_title(self):
+        if self.title is None:
+            return
+        kwargs = self.__text_style_and_position_as_kwargs(self.title_style, self.title_position)
+        self._ax.set_title(self.title, **kwargs)
+
+    def __change_x_label(self):
+        if self.x_label is None:
+            return
+        kwargs = self.__text_style_and_position_as_kwargs(self.x_label_style, self.x_label_position)
+        self._ax.set_xlabel(self.x_label, **kwargs)
+
+    def __change_y_label(self):
+        if self.y_label is None:
+            return
+        kwargs = self.__text_style_and_position_as_kwargs(self.y_label_style, self.y_label_position)
+        self._ax.set_ylabel(self.y_label, **kwargs)
+
+    def __text_style_and_position_as_kwargs(self, text_style, text_position):
+        kwargs = {'fontdict': {
+
+        }}
+
+        if text_style is not None and text_style.size is not None:
+            kwargs['fontdict']['fontsize'] = text_style.size
+        if text_style is not None and text_style.weight is not None:
+            kwargs['fontdict']['fontweight'] = text_style.weight.mpl_string
+        if text_style is not None and text_style.color is not None:
+            kwargs['fontdict']['color'] = text_style.color
+        if text_style is not None and text_style.font_name is not None:
+            kwargs['fontdict']['fontname'] = text_style.font_name
+
+        if text_position is not None and text_position.y is not None:
+            kwargs["y"] = text_position.y
+        if text_position is not None and text_position.location is not None:
+            kwargs["loc"] = text_position.location
+        if text_position is not None and text_position.pad is not None:
+            kwargs["pad"] = text_position.pad
+        return kwargs
