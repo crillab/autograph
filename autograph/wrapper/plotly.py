@@ -31,7 +31,7 @@ from autograph.core.plot import Plot
 import plotly.graph_objects as go
 import plotly.io as pio
 
-from autograph.core.style import TextPosition, TextStyle, LegendStyle
+from autograph.core.style import TextPosition, TextStyle, LegendStyle, BoxStyle
 
 pio.templates.default = 'none'
 
@@ -133,6 +133,27 @@ class Plotly(Plot):
             d['text'] = col
         self._data_plotly.append(d)
 
+    def boxplot(self, x, labels=None, style: BoxStyle = BoxStyle()):
+        if labels is not None:
+            for s, name in zip(x, labels):
+                self._data_plotly.append(go.Box({
+                    'y': s,
+                    'boxpoints': 'all',
+                    'name': name,
+                    'marker.size': 2,
+                    'boxmean': style.show_mean,
+                    'showlegend': False
+                }))
+        else:
+            for s in x:
+                self._data_plotly.append(go.Box({
+                    'y': s,
+                    'boxpoints': 'all',
+                    'marker.size': 2,
+                    'boxmean': style.show_mean,
+                    'showlegend': False
+                }))
+
     def save(self, output, **kwargs):
         pass
 
@@ -213,7 +234,7 @@ class Plotly(Plot):
             },
         })
         if style.weight is not None:
-            self._layout_plotly[key]["title"]["text"] = style.weight.plotly_string\
+            self._layout_plotly[key]["title"]["text"] = style.weight.plotly_string \
                 .format(self._layout_plotly[key]["title"]["text"])
 
     # def _legend_position_as_plotly(self, position: Position):

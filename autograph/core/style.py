@@ -87,7 +87,7 @@ class TextStyle(AbstractStyle):
         self._update_function(self)
 
     @property
-    def weight(self)->FontWeight:
+    def weight(self) -> FontWeight:
         return self._data.get("weight")
 
     @weight.setter
@@ -186,3 +186,32 @@ class PlotStyle(AbstractStyle):
     @marker_weight.setter
     def marker_weight(self, value):
         self._data['marker_weight'] = value
+
+
+class BoxStyle(AbstractStyle):
+    def __init__(self):
+        super().__init__()
+
+    @property
+    def show_mean(self):
+        return self._data.get("mean", False)
+
+    @show_mean.setter
+    def show_mean(self, value):
+        self._data["mean"] = value
+
+    @property
+    def mean_line(self):
+        return self._data.get("mean_line", False)
+
+    @mean_line.setter
+    def mean_line(self, value):
+        self._data["mean_line"] = value
+
+    @property
+    def vert(self):
+        return self._data.get("vert")
+
+    @vert.setter
+    def vert(self, value):
+        self._data["vert"] = value

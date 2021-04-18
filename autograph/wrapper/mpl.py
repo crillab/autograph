@@ -32,7 +32,7 @@ from autograph.core.enumstyle import MarkerShape, LineType, Position
 from autograph.core.plot import Plot
 import matplotlib.pyplot as plt
 
-from autograph.core.style import TextStyle, TextPosition, PlotStyle, LegendStyle
+from autograph.core.style import TextStyle, TextPosition, PlotStyle, LegendStyle, BoxStyle
 
 
 class MPL(Plot):
@@ -133,8 +133,8 @@ class MPL(Plot):
     def plot(self, x, y, label=None, style: Optional[PlotStyle] = None):
         self._internal_plot(x, y, label, style, self._ax.plot)
 
-    def boxplot(self, x, labels=None):
-        self._ax.boxplot(x, labels=labels, meanline=True, showmeans=True, vert=False)
+    def boxplot(self, x, labels=None, style: BoxStyle = BoxStyle()):
+        self._ax.boxplot(x, labels=labels, meanline=style.mean_line, showmeans=style.show_mean, vert=False)
 
     def _style_as_kwargs(self, style):
         kwargs = {}
