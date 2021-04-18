@@ -70,7 +70,7 @@ class MPL(Plot):
         if text_style is not None and text_style.size is not None:
             kwargs['fontdict']['fontsize'] = text_style.size
         if text_style is not None and text_style.weight is not None:
-            kwargs['fontdict']['fontweight'] = text_style.weight
+            kwargs['fontdict']['fontweight'] = text_style.weight.mpl_string
         if text_style is not None and text_style.color is not None:
             kwargs['fontdict']['color'] = text_style.color
         if text_style is not None and text_style.font_name is not None:
