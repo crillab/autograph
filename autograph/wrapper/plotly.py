@@ -26,10 +26,12 @@
 from collections import defaultdict
 from math import log10
 
-from autograph.core.enumstyle import MarkerShape, LineType
+from autograph.core.enumstyle import MarkerShape, LineType, Position
 from autograph.core.plot import Plot
 import plotly.graph_objects as go
 import plotly.io as pio
+
+from autograph.core.style import TextPosition, TextStyle, LegendStyle
 
 pio.templates.default = 'none'
 
@@ -50,12 +52,12 @@ class Plotly(Plot):
     @Plot.x_label.setter
     def x_label(self, value):
         Plot.x_label.fset(self, value)
-        self._layout_plotly["xaxis"]["title"] = value
+        self._layout_plotly["xaxis"]["title"] = {"text": value}
 
     @Plot.y_label.setter
     def y_label(self, value):
         Plot.y_label.fset(self, value)
-        self._layout_plotly["yaxis"]['title'] = value
+        self._layout_plotly["yaxis"]['title'] = {"text": value}
 
     @Plot.log_x.setter
     def log_x(self, value):
@@ -139,3 +141,87 @@ class Plotly(Plot):
 
     def _marker_shape_as_string(self, shape: MarkerShape):
         return shape.plotly_string
+
+    def _set_legend(self, value: LegendStyle):
+        super()._set_legend(value)
+        enabled = value is not None
+        self._layout_plotly["showlegend"] = enabled
+        if enabled:
+            value.set_update_function(self._set_legend)
+            if value.title is not None:
+                self._layout_plotly["legend"]["title"] = {
+                    "text": value.title
+                }
+
+    def _set_title_style(self, value: TextStyle):
+        super()._set_title_style(value)
+        value.set_update_function(self._set_title_style)
+        self.__change_title()
+
+    def _set_title_position(self, value: TextPosition):
+        super()._set_title_position(value)
+        value.set_update_function(self._set_title_position)
+        self.__change_title()
+
+    def _set_x_label_style(self, value: TextStyle):
+        super()._set_x_label_style(value)
+        value.set_update_function(self._set_x_label_style)
+        self.__change_x_label()
+
+    def _set_y_label_style(self, value: TextStyle):
+        super()._set_y_label_style(value)
+        value.set_update_function(self._set_y_label_style)
+        self.__change_y_label()
+
+    def _set_x_label_position(self, value: TextPosition):
+        super()._set_x_label_position(value)
+        value.set_update_function(self._set_x_label_position)
+        self.__change_x_label()
+
+    def _set_y_label_position(self, value: TextPosition):
+        super()._set_y_label_position(value)
+        value.set_update_function(self._set_y_label_position)
+        self.__change_y_label()
+
+    def __change_title(self):
+        if self.title is None:
+            return
+        self._layout_plotly.update({
+            "title_font_family": self.title_style.font_name,
+            "title_font_color": self.title_style.color,
+            "title_font_size": self.title_style.size
+        })
+        if self.title_style.weight is not None:
+            self.title = self.title_style.weight.plotly_string.format(self.title)
+
+    def __change_x_label(self):
+        if self.x_label is None:
+            return
+        self.__change_style(self.x_label_style, "xaxis")
+
+    def __change_y_label(self):
+        if self.y_label is None:
+            return
+        self.__change_style(self.y_label_style, "yaxis")
+
+    def __change_style(self, style, key):
+        self._layout_plotly[key]["title"].update({
+            "font": {
+                "family": style.font_name,
+                "size": style.size,
+                "color": style.color,
+            },
+        })
+        if style.weight is not None:
+            self._layout_plotly[key]["title"]["text"] = style.weight.plotly_string\
+                .format(self._layout_plotly[key]["title"]["text"])
+
+    # def _legend_position_as_plotly(self, position: Position):
+    #     if position == Position.TOP:
+    #         return dict(xanchor="center", yanchor="top")
+    #     if position == Position.RIGHT:
+    #         return dict(xanchor="right", yanchor="middle")
+    #     if position == Position.BOTTOM:
+    #         return dict(xanchor="center", yanchor="bottom")
+    #     if position == Position.LEFT:
+    #         return dict(xanchor="left", yanchor="center")
