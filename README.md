@@ -13,4 +13,4 @@ $ pip install crillab-autograph
 
 ## Usage 
 
-A sample notebook is available [here](example/basic.ipynb). 
+A sample notebook is available [here](https://github.com/crillab/autograph/blob/v0.1.0-rc1/example/basic.ipynb). 

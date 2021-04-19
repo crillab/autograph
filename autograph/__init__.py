@@ -50,7 +50,7 @@ __title__ = 'autograph'
 __summary__ = 'AUtogRAPH - A Unified libRary for drAwing Plots in pytHon'
 __keywords__ = 'visualization plots'
 __uri__ = 'https://github.com/crillab/autograph'
-__version__ = '0.1.0-rc2'
+__version__ = '0.1.0-rc3'
 __author__ = 'Thibault Falque, Romain Wallon, Hugues Wattez'
 __email__ = 'thibault.falque@exakis-nelite.com, wallon@lix.polytechnique.fr, wattez@cril.fr'
 
