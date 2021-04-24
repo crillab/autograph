@@ -37,6 +37,7 @@ pio.templates.default = 'none'
 
 
 class Plotly(Plot):
+
     name = "plotly"
 
     def __init__(self):
@@ -203,6 +204,8 @@ class Plotly(Plot):
         super()._set_y_label_position(value)
         value.set_update_function(self._set_y_label_position)
         self.__change_y_label()
+    def _set_latex(self, value):
+        pass
 
     def __change_title(self):
         if self.title is None:

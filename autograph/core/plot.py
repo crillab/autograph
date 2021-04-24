@@ -46,6 +46,15 @@ class Plot:
         self._data['figure_size'] = value
 
     @property
+    def latex(self):
+        return self._data.get('latex')
+
+    @latex.setter
+    def latex(self, value):
+        self._data['latex'] = value
+        self._set_latex(value)
+
+    @property
     def title(self):
         return self._data.get('title', {}).get('text')
 
@@ -224,6 +233,10 @@ class Plot:
 
     def _set_y_label_position(self, value):
         value.set_plot(value)
+
+    @abstractmethod
+    def _set_latex(self, value):
+        raise NotImplementedError
 
     @abstractmethod
     def plot(self, x, y, label=None, style: Optional[PlotStyle] = None):

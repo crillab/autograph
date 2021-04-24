@@ -25,6 +25,7 @@
 
 from typing import Optional
 
+import matplotlib
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
@@ -125,6 +126,9 @@ class MPL(Plot):
         super()._set_y_label_position(value)
         value.set_update_function(self._set_y_label_position)
         self.__change_y_label()
+
+    def _set_latex(self, value):
+        matplotlib.rc('text', usetex=value)
 
     def show(self):
         return self._figure, self._ax
