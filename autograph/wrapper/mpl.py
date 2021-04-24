@@ -175,13 +175,13 @@ class MPL(Plot):
 
     def _legend_position_as_mpl(self, position: Position):
         if position == Position.TOP:
-            return dict(loc="lower center", bbox_to_anchor=(.5, 1.1))
+            return dict(loc="lower center", bbox_to_anchor=[.5, 1.1])
         if position == Position.RIGHT:
-            return dict(loc="center left", bbox_to_anchor=(1.1, .5))
+            return dict(loc="center left", bbox_to_anchor=[1.1, .5])
         if position == Position.BOTTOM:
-            return dict(loc="upper center", bbox_to_anchor=(.5, -.1))
+            return dict(loc="upper center", bbox_to_anchor=[.5, -.1])
         if position == Position.LEFT:
-            return dict(loc="center right", bbox_to_anchor=(-.1, .5))
+            return dict(loc="center right", bbox_to_anchor=[-.1, .5])
 
     def __change_title(self):
         if self.title is None:
