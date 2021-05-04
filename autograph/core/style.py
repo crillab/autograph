@@ -23,7 +23,6 @@
 #  OTHER DEALINGS IN THE SOFTWARE.                                             #
 # ##############################################################################
 
-from matplotlib import rcParams
 
 from autograph.core.enumstyle import LineType, MarkerShape, Position, FontWeight
 
