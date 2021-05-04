@@ -55,6 +55,15 @@ class LegendStyle(AbstractStyle):
         self._update_function(self)
 
     @property
+    def offset(self):
+        return self._data.get('offset', (0, 0))
+
+    @offset.setter
+    def offset(self, value):
+        self._data['offset'] = value
+        self._update_function(self)
+
+    @property
     def n_col(self):
         return self._data.get('n_col', 1)
 

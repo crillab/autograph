@@ -25,6 +25,7 @@
 
 from typing import Optional
 
+import matplotlib
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
@@ -90,6 +91,8 @@ class MPL(Plot):
         super()._set_legend(value)
         value.set_update_function(self._set_legend)
         kwargs = self._legend_position_as_mpl(value.position)
+        kwargs['bbox_to_anchor'][0]=kwargs['bbox_to_anchor'][0]+value.offset[0]
+        kwargs['bbox_to_anchor'][1] = kwargs['bbox_to_anchor'][1] + value.offset[1]
         kwargs['title'] = value.title
         kwargs['ncol'] = value.n_col
         self._ax.legend(**kwargs)
@@ -123,6 +126,9 @@ class MPL(Plot):
         super()._set_y_label_position(value)
         value.set_update_function(self._set_y_label_position)
         self.__change_y_label()
+
+    def _set_latex(self, value):
+        matplotlib.rc('text', usetex=value)
 
     def show(self):
         return self._figure, self._ax
@@ -169,13 +175,13 @@ class MPL(Plot):
 
     def _legend_position_as_mpl(self, position: Position):
         if position == Position.TOP:
-            return dict(loc="lower center", bbox_to_anchor=(.5, 1.1))
+            return dict(loc="lower center", bbox_to_anchor=[.5, 1.1])
         if position == Position.RIGHT:
-            return dict(loc="center left", bbox_to_anchor=(1.1, .5))
+            return dict(loc="center left", bbox_to_anchor=[1.1, .5])
         if position == Position.BOTTOM:
-            return dict(loc="upper center", bbox_to_anchor=(.5, -.1))
+            return dict(loc="upper center", bbox_to_anchor=[.5, -.1])
         if position == Position.LEFT:
-            return dict(loc="center right", bbox_to_anchor=(-.1, .5))
+            return dict(loc="center right", bbox_to_anchor=[-.1, .5])
 
     def __change_title(self):
         if self.title is None:
