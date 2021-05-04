@@ -64,7 +64,7 @@ def requirements() -> List[str]:
         "python-dateutil==2.8.1",
         "retrying==1.3.3",
         "setuptools==44.1.1",
-        "six==1.15.0"
+        "six==1.14.0"
     ]
 
 
