@@ -24,8 +24,6 @@
 # ##############################################################################
 
 from autograph.core.plot import Plot
-from autograph.wrapper.mpl import MPL
-from autograph.wrapper.plotly import Plotly
 
 
 def create_plot(name: str):
