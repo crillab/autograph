@@ -23,9 +23,10 @@
 #  OTHER DEALINGS IN THE SOFTWARE.                                             #
 # ##############################################################################
 
+from autograph.core.plot import Plot
+
 
 def create_plot(name: str):
-    from autograph.core.plot import Plot
     from autograph.wrapper.mpl import MPL
     from autograph.wrapper.plotly import Plotly
 
@@ -50,7 +51,7 @@ __title__ = 'autograph'
 __summary__ = 'AUtogRAPH - A Unified libRary for drAwing Plots in pytHon'
 __keywords__ = 'visualization plots'
 __uri__ = 'https://github.com/crillab/autograph'
-__version__ = '0.1.0-rc8'
+__version__ = '0.1.0-rc9'
 __author__ = 'Thibault Falque, Romain Wallon, Hugues Wattez'
 __email__ = 'thibault.falque@exakis-nelite.com, wallon@lix.polytechnique.fr, wattez@cril.fr'
 
