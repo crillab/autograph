@@ -15,7 +15,7 @@ MODULE_NAME = autograph
 
 # The version of the package to build.
 
-VERSION = 0.1.0-rc5
+VERSION = 0.1.0-rc6
 
 
 # The directory of the unit tests for the package to build.
