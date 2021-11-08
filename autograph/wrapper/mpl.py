@@ -91,8 +91,8 @@ class MPL(Plot):
         super()._set_legend(value)
         value.set_update_function(self._set_legend)
         kwargs = self._legend_position_as_mpl(value.position)
-        kwargs['bbox_to_anchor'][0]=kwargs['bbox_to_anchor'][0]+value.offset[0]
-        kwargs['bbox_to_anchor'][1] = kwargs['bbox_to_anchor'][1] + value.offset[1]
+        kwargs['bbox_to_anchor'] = (kwargs['bbox_to_anchor'][0] + value.offset[0],
+                                    kwargs['bbox_to_anchor'][1] + value.offset[1])
         kwargs['title'] = value.title
         kwargs['ncol'] = value.n_col
         self._ax.legend(**kwargs)
