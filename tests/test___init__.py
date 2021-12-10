@@ -25,7 +25,8 @@
 
 from unittest import TestCase
 
-from autograph import create_plot, MPL
+from autograph import create_plot
+from autograph.wrapper.mpl import MPL
 from autograph.wrapper.plotly import Plotly
 
 

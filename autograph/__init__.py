@@ -45,6 +45,7 @@ __all__ = [
     '__email__',
     '__license__',
     '__copyright__',
+    'create_plot'
 ]
 
 __title__ = 'autograph'
