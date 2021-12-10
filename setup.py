@@ -52,19 +52,20 @@ def requirements() -> List[str]:
     :return: The dependencies of Metrics.
     """
     return [
-        "Pillow==8.2.0",
-        "cycler==0.10.0",
-        "kiwisolver==1.3.1",
-        "matplotlib==3.4.1",
-        "nose==1.3.7",
-        "numpy==1.20.2",
-        "pip==20.1.1",
-        "plotly==4.14.3",
-        "pyparsing==2.4.7",
-        "python-dateutil==2.8.1",
-        "retrying==1.3.3",
-        "setuptools==44.1.1",
-        "six==1.14.0"
+        "Pillow",
+        "cycler",
+        "kiwisolver",
+        "matplotlib",
+        "nose",
+        "numpy",
+        "pip",
+        "plotly",
+        "pyparsing",
+        "python-dateutil",
+        "retrying",
+        "setuptools",
+        "six",
+        "Cython"
     ]
 
 
