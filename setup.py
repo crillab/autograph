@@ -65,7 +65,8 @@ def requirements() -> List[str]:
         "retrying",
         "setuptools",
         "six",
-        "Cython"
+        "Cython",
+        'seaborn'
     ]
 
 

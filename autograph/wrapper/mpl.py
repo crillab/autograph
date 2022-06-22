@@ -32,7 +32,7 @@ from matplotlib.figure import Figure
 from autograph.core.enumstyle import MarkerShape, LineType, Position
 from autograph.core.plot import Plot
 import matplotlib.pyplot as plt
-
+import seaborn as sns
 from autograph.core.style import TextStyle, TextPosition, PlotStyle, LegendStyle, BoxStyle
 
 
@@ -142,6 +142,15 @@ class MPL(Plot):
     def boxplot(self, x, labels=None, style: BoxStyle = BoxStyle()):
         self._ax.boxplot(x, labels=labels, meanline=style.mean_line, showmeans=style.show_mean,
                          vert=style.vert)
+
+    def barplot(self, x, y, data, category=None):
+        if category is not None:
+            self._ax = sns.barplot(x, y, data=data, hue=category, ax=self._ax)
+        else:
+            self._ax = sns.barplot(x, y, data=data, ax=self._ax)
+
+    def heatmap(self, data):
+        self._ax = sns.heatmap(data, ax=self._ax)
 
     def _style_as_kwargs(self, style):
         kwargs = {}

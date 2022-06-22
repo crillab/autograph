@@ -246,7 +246,16 @@ class Plot:
     def scatter(self, x, y, label=None, style: Optional[PlotStyle] = None):
         raise NotImplementedError
 
+    @abstractmethod
     def boxplot(self, x):
+        raise NotImplementedError
+
+    @abstractmethod
+    def barplot(self, x, y, data, category=None):
+        raise NotImplementedError
+
+    @abstractmethod
+    def heatmap(self, data):
         raise NotImplementedError
 
     @abstractmethod
