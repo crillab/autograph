@@ -28,7 +28,7 @@ from collections import defaultdict
 from typing import Optional
 
 from autograph.core.enumstyle import LineType, MarkerShape
-from autograph.core.style import TextStyle, TextPosition, PlotStyle, LegendStyle
+from autograph.core.style import TextStyle, TextPosition, PlotStyle, LegendStyle, CyclerStyle
 
 
 class Plot:
@@ -233,6 +233,19 @@ class Plot:
 
     def _set_y_label_position(self, value):
         value.set_plot(value)
+
+    @property
+    def cycler(self):
+        return self._data.get('cycler')
+
+    @cycler.setter
+    def cycler(self, value: CyclerStyle):
+        self._data['cycler'] = value
+        self._set_cycler()
+
+    @abstractmethod
+    def _set_cycler(self):
+        raise NotImplementedError
 
     @abstractmethod
     def _set_latex(self, value):

@@ -26,6 +26,7 @@
 from typing import Optional
 
 import matplotlib
+from cycler import cycler
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
@@ -129,6 +130,16 @@ class MPL(Plot):
 
     def _set_latex(self, value):
         matplotlib.rc('text', usetex=value)
+
+    def _set_cycler(self):
+        list_cycler = []
+        if self._data['cycler'] is not None:
+            if self._data['cycler'].marker is not None:
+                list_cycler.append(cycler(marker=self._data['cycler'].marker.all_mpl_strings()))
+            if self._data['cycler'].line_style is not None:
+                list_cycler.append(cycler(line_style=self._data['cycler'].line_style.all_mpl_strings()))
+            if self._data['cycler'].color is not None:
+                list_cycler.append(cycler(plt.get_cmap(self._data['cycler'].color)))
 
     def show(self):
         return self._figure, self._ax

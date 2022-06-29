@@ -151,6 +151,38 @@ class TextPosition(AbstractStyle):
         self._data['y'] = value
 
 
+class CyclerStyle(AbstractStyle):
+    def __init__(self):
+        super().__init__()
+        self._data['marker'] = list(MarkerShape)
+        self._data['line_style'] = list(LineType)
+        self._data['color_palette'] = 'tab20'
+
+    @property
+    def marker(self):
+        return self._data.get("marker")
+
+    @marker.setter
+    def marker(self, value):
+        self._data['marker'] = value
+
+    @property
+    def line_style(self):
+        return self._data.get("line_style")
+
+    @line_style.setter
+    def line_style(self, value):
+        self._data['line_style'] = value
+
+    @property
+    def color_palette(self):
+        return self._data.get("color_palette")
+
+    @color_palette.setter
+    def color_palette(self, value):
+        self._data['color_palette'] = value
+
+
 class PlotStyle(AbstractStyle):
     def __init__(self):
         super().__init__()
