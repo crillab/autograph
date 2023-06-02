@@ -150,15 +150,22 @@ class MPL(Plot):
     def plot(self, x, y, label=None, style: Optional[PlotStyle] = None):
         self._internal_plot(x, y, label, style, self._ax.plot)
 
+    def hline(self, y, label=None, style: Optional[PlotStyle] = None):
+        if style is None:
+            self._ax.axhline(y, label=label)
+        else:
+            kwargs = self._style_as_kwargs(style)
+            self._ax.axhline(y, label=label, **kwargs)
+
     def boxplot(self, x, labels=None, style: BoxStyle = BoxStyle()):
         self._ax.boxplot(x, labels=labels, meanline=style.mean_line, showmeans=style.show_mean,
                          vert=style.vert)
 
-    def barplot(self, x, y, data, category=None,estimator=sum):
+    def barplot(self, x, y, data, category=None, estimator=sum):
         if category is not None:
-            self._ax = sns.barplot(x, y, data=data, hue=category, ax=self._ax,estimator=estimator)
+            self._ax = sns.barplot(x=x, y=y, data=data, hue=category, ax=self._ax, estimator=estimator)
         else:
-            self._ax = sns.barplot(x, y, data=data, ax=self._ax,estimator=estimator)
+            self._ax = sns.barplot(x=x, y=y, data=data, ax=self._ax, estimator=estimator)
 
     def heatmap(self, data):
         self._ax = sns.heatmap(data, ax=self._ax)

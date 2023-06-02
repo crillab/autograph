@@ -255,6 +255,9 @@ class Plot:
     def plot(self, x, y, label=None, style: Optional[PlotStyle] = None):
         raise NotImplementedError
 
+    def hline(self, y, label=None, style: Optional[PlotStyle] = None):
+        raise NotImplementedError
+
     @abstractmethod
     def scatter(self, x, y, label=None, style: Optional[PlotStyle] = None):
         raise NotImplementedError
