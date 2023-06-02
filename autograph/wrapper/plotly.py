@@ -155,7 +155,13 @@ class Plotly(Plot):
                 }))
 
     def barplot(self, x, y, data, category=None):
-        pass
+        raise NotImplementedError
+        # if category is None:
+        #     for v in data.index:
+        #         self._data_plotly.append(go.Bar(x=data.index, y=data[y], name=v))
+        # else:
+        #     for c, group in data.groupby(category):
+        #         self._data_plotly.append(go.Bar(x=group[x], y=group[y], name=c))
 
     def heatmap(self, data):
         pass
