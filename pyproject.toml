@@ -1,15 +1,15 @@
 
 [project]
 name = "crillab-autograph"
-version = "0.1.0-rc11"
+version = "0.1.0"
 description = "AUtogRAPH - A Unified libRary for drAwing Plots in pytHon"
 keywords = ["visualization plots"]
 readme = "README.md"
 authors = [
-    {name = "Thibault Falque, Romain Wallon, Hugues Wattez", email = "metrics@cril.fr"},
+    {name = "Thibault Falque, Romain Wallon, Hugues Wattez"}, {email = "metrics@cril.fr"},
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3.8",

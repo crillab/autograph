@@ -15,7 +15,7 @@ MODULE_NAME = autograph
 
 # The version of the package to build.
 
-VERSION = 0.1.0-rc13
+VERSION = 0.1.0
 
 
 # The directory of the unit tests for the package to build.
@@ -86,7 +86,7 @@ package: dist/$(PACKAGE_NAME)-$(VERSION).tar.gz
 
 # Packages the project into a gzipped-tarball archive.
 dist/$(PACKAGE_NAME)-$(VERSION).tar.gz:
-	python3 setup.py sdist
+	python3 -m build
 
 
 # Uploads the project on PyPI.
